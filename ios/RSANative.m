@@ -193,10 +193,13 @@ typedef void (^SecKeyPerformBlock)(SecKeyRef key);
                                                      kSecKeyAlgorithmRSAEncryptionPKCS1);
         if (canDecrypt) {
             CFErrorRef error = NULL;
+            if(data){
             clearText = (NSData *)CFBridgingRelease(SecKeyCreateDecryptedData(privateKey,
                                                                               kSecKeyAlgorithmRSAEncryptionPKCS1,
                                                                               (__bridge CFDataRef)data,
                                                                               &error));
+            }
+            
             if (!clearText) {
                 NSError *err = CFBridgingRelease(error);
                 NSLog(@"%@", err);
